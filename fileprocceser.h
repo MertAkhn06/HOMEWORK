@@ -11,10 +11,10 @@
 typedef struct {
     int x;
     char *c;
-} myStruct;
-int exchange( myStruct *alphaarr,int i,int j);
+} WordFreq;
+int exchange( WordFreq *alphaarr,int i,int j);
 
-int fileread(char *filename,char **returninput) {
+int fileread(char *filename,char **returninput) { //input reading and processing
     FILE *f;
     f = fopen(filename,"r");
     int n = 0;
@@ -26,7 +26,7 @@ int fileread(char *filename,char **returninput) {
     char inp;
     int inputstatus = fscanf(f,"%c",&inp);
     while (inputstatus != EOF) {
-        if (isalpha(inp) && !isspace(inp)) {
+        if (isalpha(inp) && !isspace(inp)) { //nonalphabetic chars removed
             infile[n] = tolower(inp);
             n++;
             infile = realloc(infile, sizeof(char) * (n + 1));
@@ -51,7 +51,7 @@ int fileread(char *filename,char **returninput) {
 
 }
 
-int isinorder(char *str1,char *str2) {
+int isinorder(char *str1,char *str2) { //checking if the two elements of the array are alphabetically in order
     int i  = 0;
     while (str1[i] != '\0' && str2[i] != '\0') {
         if (str1[i]<str2[i]) {
@@ -67,7 +67,7 @@ int isinorder(char *str1,char *str2) {
     }
     return 0;
 }
-int exchange(myStruct *alphaarr,int i,int j) {
+int exchange(WordFreq *alphaarr,int i,int j) { //changing places of elements
     int len = strlen(alphaarr[i].c);
     char *temp= malloc(sizeof(char)*(len+1));
     if (temp == NULL) {
@@ -84,7 +84,7 @@ int exchange(myStruct *alphaarr,int i,int j) {
     free(temp);
 
 }
-void reorder( myStruct *alphaarr,int size) {
+void reorder( WordFreq *alphaarr,int size) {//alphabetically ordering elements
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size-1; j++) {
             if (isinorder(alphaarr[j].c,alphaarr[j+1].c)==0) {
@@ -94,7 +94,7 @@ void reorder( myStruct *alphaarr,int size) {
     }
 }
 
-void freqorder( myStruct *freqarr,int size) {
+void freqorder( WordFreq *freqarr,int size) {  // Frequency ordering elements
     for (int i = 0;i<size;i++) {
         for (int j = 0;j<size;j++) {
             if (freqarr[i].x > freqarr[j].x) {
